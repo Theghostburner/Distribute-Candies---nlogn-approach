@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool check(long long mid,vector<long long> &vec,long long n,long long k)
+{
+    long long person=0;
+    long long i=0;
+    while(i<n && person<k)
+    {
+        person+=(vec[i]/mid);
+        i++;
+    }
+    if(person >=k)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+long long distribute(vector<long long> &vec,long long n,long long k)
+{
+    long long right = vec[n-1];
+    long long left = 0;
+    long long ans = 0;
+    while(right>=left)
+    {
+        long long mid = (left+right)/2;
+        if(check(mid,vec,n,k))
+        {
+            left = mid+1;
+            ans = mid;
+        }
+        else
+        {
+            right = mid-1;
+        }
+    }
+    return ans;
+}
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        long long n,k;
+        cin>>n>>k;
+        vector<long long> vec;
+        for(long long i=0;i<n;i++)
+        {
+            long long input;
+            cin>>input;
+            vec.push_back(input);
+        }
+        sort(vec.begin(),vec.end());
+        long long ans = distribute(vec,n,k);
+        cout<<ans<<endl;
+    }
+}
